@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Align Equity Group | Command Center</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Syne:wght@500;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #f5f6f8;
+  --bg2:      #eef0f3;
+  --surf:     #ffffff;
+  --surf2:    #f0f2f6;
+  --border:   #e2e5ec;
+  --border2:  #c8cdd8;
+  --gold:     #b8922a;
+  --gold-d:   rgba(184,146,42,0.10);
+  --text:     #0f1117;
+  --sub:      #5a5f6e;
+  --muted:    #9aa0b0;
+  --navy:     #1e2e45;
+  --green:    #2e8a55;
+  --green-d:  rgba(46,138,85,0.10);
+  --blue:     #2a5fa8;
+  --blue-d:   rgba(42,95,168,0.10);
+  --red:      #b84535;
+  --red-d:    rgba(184,69,53,0.10);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'Syne', system-ui, sans-serif;
+  --mono:  'DM Mono', monospace;
+  --tab-h: 56px;
+  --top-h: 64px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--mono);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* no grain on light theme */
+
+/* ─── TOPBAR ─── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--top-h);
+  background: var(--navy);
+  border-bottom: 1px solid rgba(0,0,0,0.12);
+  display: flex; align-items: center;
+  padding: 0 24px;
+  gap: 16px;
+}
+
+.top-brand {
+  display: flex; align-items: baseline; gap: 10px;
+  flex-shrink: 0;
+}
+
+.top-wordmark {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.top-wordmark em { font-style: italic; color: var(--gold); }
+
+.top-pipe {
+  width: 1px; height: 12px;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.top-tag {
+  font-size: 9px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  white-space: nowrap;
+}
+
+.top-spacer { flex: 1; }
+
+.search {
+  display: flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 6px;
+  padding: 7px 12px;
+  width: min(220px, 100%);
+  transition: border-color 0.15s, background 0.15s;
+}
+.search:focus-within {
+  background: rgba(255,255,255,0.16);
+  border-color: rgba(255,255,255,0.3);
+}
+.search input {
+  background: none; border: none; outline: none;
+  font-family: var(--mono); font-size: 11px;
+  color: #ffffff; width: 100%;
+}
+.search input::placeholder { color: rgba(255,255,255,0.35); }
+
+.top-clock {
+  font-family: var(--serif);
+  font-size: 19px; font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  letter-spacing: -0.02em;
+  white-space: nowrap; flex-shrink: 0;
+}
+
+/* ─── TAB NAV ─── */
+.tabnav {
+  position: sticky;
+  top: var(--top-h);
+  z-index: 90;
+  background: var(--surf);
+  border-bottom: 1px solid var(--border);
+  height: var(--tab-h);
+  display: flex; align-items: stretch;
+  padding: 0 20px;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.tabnav::-webkit-scrollbar { display: none; }
+
+.tab {
+  display: flex; align-items: center; gap: 8px;
+  padding: 0 18px;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  user-select: none;
+  flex-shrink: 0;
+  font-family: var(--mono);
+}
+
+.tab:hover { color: var(--text); }
+
+.tab.active {
+  color: var(--navy);
+  border-bottom-color: var(--navy);
+}
+
+.tab-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--border2);
+  transition: background 0.15s;
+}
+.tab.active .tab-dot,
+.tab:hover .tab-dot { background: var(--navy); }
+
+.tab-count {
+  font-size: 9px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1px 6px;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.tab.active .tab-count {
+  background: rgba(30,46,69,0.08);
+  border-color: rgba(30,46,69,0.2);
+  color: var(--navy);
+}
+
+/* ─── PANELS ─── */
+.panels { padding: 32px 24px 80px; }
+
+.panel { display: none; }
+.panel.active {
+  display: block;
+  animation: fadeIn 0.22s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── PANEL HEADER ─── */
+.panel-header {
+  margin-bottom: 24px;
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 16px;
+}
+
+.panel-title {
+  font-family: var(--serif);
+  font-size: 32px; font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+}
+.panel-title em { font-style: italic; color: var(--navy); }
+
+.panel-meta {
+  font-size: 10px; color: var(--sub);
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+/* ─── HERO CARD (featured full width) ─── */
+.hero-card {
+  background: var(--navy);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 16px;
+  text-decoration: none; color: inherit;
+  transition: opacity 0.18s;
+  position: relative; overflow: hidden;
+}
+
+.hero-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 2px; background: var(--gold);
+}
+
+.hero-card:hover { opacity: 0.92; }
+
+.hero-card-left { display: flex; align-items: center; gap: 20px; }
+
+.hero-icon {
+  width: 56px; height: 56px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.hero-info {}
+
+.hero-label {
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 5px;
+}
+
+.hero-name {
+  font-family: var(--sans);
+  font-size: 18px; font-weight: 700;
+  color: #ffffff; letter-spacing: -0.01em;
+  margin-bottom: 4px;
+}
+
+.hero-desc {
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  line-height: 1.55; max-width: 480px;
+}
+
+.hero-btn {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--gold);
+  color: var(--navy);
+  font-family: var(--mono); font-size: 11px;
+  font-weight: 500; letter-spacing: 0.07em;
+  padding: 10px 20px; border-radius: 6px;
+  text-decoration: none;
+  transition: opacity 0.15s;
+  white-space: nowrap; flex-shrink: 0;
+}
+.hero-btn:hover { opacity: 0.85; }
+
+/* ─── CARD GRID ─── */
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* ─── CARD ─── */
+.card {
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px 16px;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  cursor: pointer;
+  position: relative; overflow: hidden;
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--c-accent, var(--navy));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.22s ease;
+}
+
+.card:hover {
+  border-color: var(--border2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.09);
+}
+
+.card:hover::before { transform: scaleX(1); }
+
+.c-gold  { --c-accent: var(--gold);  }
+.c-green { --c-accent: var(--green); }
+.c-blue  { --c-accent: var(--blue);  }
+.c-red   { --c-accent: var(--red);   }
+
+.card-top {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.card-icon svg { opacity: 0.45; transition: opacity 0.15s; }
+.card:hover .card-icon svg { opacity: 0.85; }
+
+.badge {
+  font-size: 9px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 3px;
+  font-family: var(--mono);
+}
+.b-live  { background: var(--green-d); color: var(--green); border: 1px solid rgba(46,138,85,0.2); }
+.b-build { background: var(--gold-d);  color: var(--gold);  border: 1px solid rgba(184,146,42,0.2); }
+.b-ext   { background: var(--blue-d);  color: var(--blue);  border: 1px solid rgba(42,95,168,0.2); }
+.b-send  { background: rgba(30,46,69,0.07); color: var(--navy); border: 1px solid rgba(30,46,69,0.15); }
+
+.card-name {
+  font-family: var(--sans);
+  font-size: 13px; font-weight: 700;
+  color: var(--text); letter-spacing: -0.01em;
+  line-height: 1.25; margin-bottom: 6px;
+}
+
+.card-desc {
+  font-size: 11px; color: var(--sub);
+  line-height: 1.62; flex: 1;
+  margin-bottom: 14px; letter-spacing: 0.01em;
+}
+
+.card-foot {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.card-url {
+  font-size: 9px; color: var(--muted);
+  letter-spacing: 0.04em;
+  white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; max-width: 160px;
+}
+
+.card-go {
+  width: 20px; height: 20px;
+  border-radius: 4px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: all 0.15s;
+}
+.card:hover .card-go {
+  background: var(--navy);
+  border-color: var(--navy);
+}
+.card:hover .card-go svg { stroke: white; }
+
+/* placeholder */
+.card-ph {
+  background: var(--bg) !important;
+  border: 1px dashed var(--border2) !important;
+  align-items: center; justify-content: center;
+  min-height: 120px; opacity: 0.6;
+  cursor: default;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.card-ph::before { display: none !important; }
+
+.ph-inner { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+.ph-plus  { font-size: 18px; color: var(--muted); font-weight: 300; }
+.ph-text  { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+
+/* ─── STATUS ROW ─── */
+.status-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.st-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; color: var(--sub);
+  border: 1px solid var(--border);
+  border-radius: 20px; padding: 4px 10px;
+  background: var(--surf);
+}
+
+.pip {
+  width: 5px; height: 5px; border-radius: 50%;
+}
+.pip-live  { background: var(--green); box-shadow: 0 0 5px var(--green); animation: pulse 2.5s ease infinite; }
+.pip-build { background: var(--gold);  box-shadow: 0 0 4px var(--gold);  animation: pulse 2s   ease infinite; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ─── EXTERNAL LINKS PANEL ─── */
+.ext-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ext-card {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surf);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  text-decoration: none; color: inherit;
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+
+.ext-card:hover {
+  border-color: var(--border2);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+.ext-card-name {
+  font-family: var(--sans);
+  font-size: 12px; font-weight: 700;
+  color: var(--text); margin-bottom: 3px;
+}
+
+.ext-card-url {
+  font-size: 10px; color: var(--sub);
+  letter-spacing: 0.03em;
+}
+
+.ext-card svg { flex-shrink: 0; opacity: 0.3; transition: opacity 0.15s; }
+.ext-card:hover svg { opacity: 0.7; }
+
+/* ─── SEARCH RESULTS ─── */
+.search-panel {
+  display: none;
+}
+
+.search-panel.active { display: block; }
+
+.search-empty {
+  text-align: center; padding: 60px 20px;
+  font-size: 12px; color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .grid, .ext-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-card { flex-direction: column; align-items: flex-start; }
+  .top-tag, .top-pipe { display: none; }
+}
+
+@media (max-width: 560px) {
+  .topbar { padding: 0 16px; gap: 10px; }
+  .panels { padding: 20px 16px 60px; }
+  .tabnav { padding: 0 12px; }
+  .tab { padding: 0 12px; font-size: 10px; }
+  .grid, .ext-grid { grid-template-columns: 1fr; }
+  .panel-title { font-size: 26px; }
+  .hero-card { padding: 18px 18px; }
+  .hero-icon { width: 44px; height: 44px; }
+  .hero-name { font-size: 15px; }
+  .top-clock { display: none; }
+  .panel-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+}
+/* ─── LOGO ─── */
+.top-logo {
+  height: 28px;
+  width: auto;
+  display: block;
+  flex-shrink: 0;
+}
+
+/* ─── FORCE LIGHT MODE — ignore OS/browser dark preference ─── */
+:root {
+  color-scheme: light only;
+}
+html, body {
+  forced-color-adjust: none;
+  -webkit-forced-color-adjust: none;
+}
+@media (prefers-color-scheme: dark) {
+  html { background: var(--bg) !important; color: var(--text) !important; }
+  body { background: var(--bg) !important; color: var(--text) !important; }
+  * { border-color: initial; }
+}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate" style="
+  position:fixed;inset:0;z-index:99999;
+  background:#1e2e45;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Mono',monospace;
+">
+  <div style="
+    background:#ffffff;
+    border-radius:12px;
+    padding:40px 44px;
+    width:min(380px,90vw);
+    text-align:center;
+    box-shadow:0 24px 64px rgba(0,0,0,0.3);
+  ">
+    <img src="https://alignequitygroup.com/wp-content/uploads/2026/03/capital-unlocked-new-logo-black.png"
+         alt="Capital Unlocked"
+         style="height:32px;width:auto;margin:0 auto 28px;display:block;">
+    <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#8a8f9e;margin-bottom:6px;">Command Center</div>
+    <div style="font-size:13px;color:#4a4e5a;margin-bottom:24px;letter-spacing:0.01em;">Enter your access password</div>
+    <input id="pw" type="password" placeholder="Password" autocomplete="off"
+      style="
+        width:100%;padding:11px 14px;
+        border:1px solid #d8dbe3;border-radius:6px;
+        font-family:'DM Mono',monospace;font-size:13px;
+        color:#0f1117;background:#f5f6f8;
+        outline:none;margin-bottom:10px;
+        transition:border-color 0.15s;
+        box-sizing:border-box;
+      "
+      onkeydown="if(event.key==='Enter')checkPw()"
+      onfocus="this.style.borderColor='#1e2e45'"
+      onblur="this.style.borderColor='#d8dbe3'"
+    >
+    <div id="pw-err" style="font-size:11px;color:#b84535;margin-bottom:10px;min-height:16px;letter-spacing:0.04em;"></div>
+    <button onclick="checkPw()" style="
+      width:100%;padding:11px;
+      background:#1e2e45;color:#ffffff;
+      border:none;border-radius:6px;
+      font-family:'DM Mono',monospace;font-size:12px;
+      font-weight:500;letter-spacing:0.08em;text-transform:uppercase;
+      cursor:pointer;transition:opacity 0.15s;
+    "
+    onmouseover="this.style.opacity='0.85'"
+    onmouseout="this.style.opacity='1'"
+    >Unlock</button>
+  </div>
+</div>
+
+<script>
+function checkPw() {
+  const val = document.getElementById('pw').value;
+  if (val === 'AEG2026@@') {
+    document.getElementById('gate').style.display = 'none';
+    sessionStorage.setItem('aeg_auth', '1');
+  } else {
+    const err = document.getElementById('pw-err');
+    err.textContent = 'Incorrect password.';
+    document.getElementById('pw').value = '';
+    document.getElementById('pw').focus();
+    setTimeout(() => { err.textContent = ''; }, 3000);
+  }
+}
+// Auto-unlock if already authenticated this session
+if (sessionStorage.getItem('aeg_auth') === '1') {
+  document.getElementById('gate').style.display = 'none';
+}
+</script>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="top-brand">
+    <img src="https://alignequitygroup.com/wp-content/uploads/2026/03/capital-unlocked-new-logo-white.png"
+         alt="Capital Unlocked" class="top-logo">
+    <div class="top-pipe"></div>
+    <div class="top-tag">Command Center</div>
+  </div>
+  <div class="top-spacer"></div>
+  <div class="search" id="searchWrap">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input type="text" placeholder="search all links..." id="si" oninput="onSearch()" autocomplete="off">
+  </div>
+  <div class="top-clock" id="clk">--:--</div>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tabnav" id="tabnav">
+  <div class="tab active" data-tab="primary">
+    <span class="tab-dot"></span>
+    Primary
+    <span class="tab-count">3</span>
+  </div>
+  <div class="tab" data-tab="sales">
+    <span class="tab-dot"></span>
+    Sales
+    <span class="tab-count">3</span>
+  </div>
+  <div class="tab" data-tab="programs">
+    <span class="tab-dot"></span>
+    Programs
+    <span class="tab-count">3</span>
+  </div>
+  <div class="tab" data-tab="deals">
+    <span class="tab-dot"></span>
+    Deal Tools
+    <span class="tab-count">3</span>
+  </div>
+  <div class="tab" data-tab="external">
+    <span class="tab-dot"></span>
+    External
+    <span class="tab-count">5</span>
+  </div>
+</nav>
+
+<!-- PANELS -->
+<div class="panels">
+
+  <!-- SEARCH RESULTS -->
+  <div class="search-panel" id="searchPanel">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Search <em>Results</em></div>
+      </div>
+    </div>
+    <div class="grid" id="searchGrid"></div>
+    <div class="search-empty" id="searchEmpty" style="display:none">No matches found.</div>
+  </div>
+
+  <!-- PRIMARY -->
+  <div class="panel active" id="panel-primary">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Primary <em>Tools</em></div>
+        <div class="panel-meta">Daily operational access</div>
+      </div>
+      <div class="status-row">
+        <div class="st-pill"><span class="pip pip-live"></span>Stats Dashboard</div>
+        <div class="st-pill"><span class="pip pip-live"></span>Commissions</div>
+        <div class="st-pill"><span class="pip pip-live"></span>PML CRM</div>
+      </div>
+    </div>
+
+    <!-- Featured -->
+    <a class="hero-card" href="https://nickayala22.github.io/Stats-Dashboard/" target="_blank">
+      <div class="hero-card-left">
+        <div class="hero-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg></div>
+        <div class="hero-info">
+          <div class="hero-label">Primary Dashboard</div>
+          <div class="hero-name">Stats & Sales Dashboard</div>
+          <div class="hero-desc">Pipeline performance, rep activity, deal stages. Full real-time snapshot of what's moving and what isn't.</div>
+        </div>
+      </div>
+      <div class="hero-btn">
+        Open
+        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </div>
+    </a>
+
+    <div class="grid">
+      <a class="card c-green" href="https://nickayala22.github.io/commission-tracker-capital-unlocked/commission-tracker.html" target="_blank"
+         data-name="Commission Tracker" data-tags="commissions payouts reps chargebacks approval tiered supabase">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v1m0 8v1M9.5 9.5a2.5 2.5 0 015 0c0 1.5-1 2-2.5 2.5S9.5 13 9.5 14.5a2.5 2.5 0 005 0"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">Commission Tracker</div>
+        <div class="card-desc">Tiered rates, approval flow, chargebacks, rep onboarding, payout history. Real reps active. Supabase-backed.</div>
+        <div class="card-foot">
+          <div class="card-url">commission-tracker-capital-unlocked</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a class="card c-blue" href="https://nickayala22.github.io/align-pml-deal-match/" target="_blank"
+         data-name="Private Money Match CRM" data-tags="PML CRM deal match private money lenders capital partners supabase login">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 00-4.9-3.9M9 20H4v-2a4 4 0 014.9-3.9M15 7a4 4 0 11-8 0 4 4 0 018 0zm6 3a3 3 0 11-6 0 3 3 0 016 0zM3 10a3 3 0 106 0 3 3 0 00-6 0z"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">Private Money Match CRM</div>
+        <div class="card-desc">Capital partner database, deal matching, deals-sent tracking. Supabase with login system and Cloudflare proxy.</div>
+        <div class="card-foot">
+          <div class="card-url">align-pml-deal-match</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <div class="card card-ph">
+        <div class="ph-inner">
+          <div class="ph-plus">+</div>
+          <div class="ph-text">Add a primary tool</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SALES -->
+  <div class="panel" id="panel-sales">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Sales <em>Tools</em></div>
+        <div class="panel-meta">Closers, intake, advisory</div>
+      </div>
+    </div>
+    <div class="grid">
+
+      <a class="card c-gold" href="https://nickayala22.github.io/Capital-Unlocked-TWC-What-s-Inside/" target="_blank"
+         data-name="What's Inside" data-tags="sales team program overview capital unlocked wealth circle send ahead prospects">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg></div>
+          <span class="badge b-send">Send-Ahead</span>
+        </div>
+        <div class="card-name">What's Inside the Program</div>
+        <div class="card-desc">Interactive overview of Capital Unlocked and The Wealth Circle. Send before a sales call. No pricing shown.</div>
+        <div class="card-foot">
+          <div class="card-url">Capital-Unlocked-TWC-What-s-Inside</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a class="card c-blue" href="https://alignequitygroup.com/advisory" target="_blank"
+         data-name="Advisory Intake" data-tags="advisory intake align equity 25k engagement capital positioning scoring filter">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <span class="badge b-live">$25K Engagement</span>
+        </div>
+        <div class="card-name">Advisory Intake Form</div>
+        <div class="card-desc">Capital Positioning Advisory Engagement. Two-stage filter, internal scoring, minimum raise threshold gates entry.</div>
+        <div class="card-foot">
+          <div class="card-url">alignequitygroup.com/advisory</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <div class="card card-ph">
+        <div class="ph-inner">
+          <div class="ph-plus">+</div>
+          <div class="ph-text">Tier 3 Intake, Coming</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- PROGRAMS -->
+  <div class="panel" id="panel-programs">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Programs & <em>Onboarding</em></div>
+        <div class="panel-meta">Member-facing, operator intake, deal flow</div>
+      </div>
+    </div>
+    <div class="grid">
+
+      <a class="card c-gold" href="https://nickayala22.github.io/capital-unlocked-map/" target="_blank"
+         data-name="60-Day MAP" data-tags="60 day map onboarding new students capital unlocked GHL tier gated raise OS deck">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">60-Day MAP</div>
+        <div class="card-desc">Tier-gated onboarding tracker. Raise OS CRM blocks, deck intake flow. Embedded in GHL, sent via welcome email.</div>
+        <div class="card-foot">
+          <div class="card-url">capital-unlocked-map</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a class="card c-green" href="https://nickayala22.github.io/PML-deal-submission-checklist-and-form/pml-readiness-scorecard.html" target="_blank"
+         data-name="PML Readiness Scorecard" data-tags="PML readiness deal submission checklist qualify operators lender intro gate">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">PML Readiness Scorecard</div>
+        <div class="card-desc">Vets operator readiness before any lender intro. Checklist and submission form. Quality gate for the network.</div>
+        <div class="card-foot">
+          <div class="card-url">PML-deal-submission-checklist</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a class="card c-blue" href="https://jointhewealthcircle.com/deal-submission" target="_blank"
+         data-name="Deal Submission" data-tags="deal submission wealth circle capital partner redirect operators entry point">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/><line x1="12" y1="11" x2="12" y2="17"/><polyline points="9 14 12 17 15 14"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">Deal Submission</div>
+        <div class="card-desc">Front door for operators entering deals into the network. Redirect into the capital matching flow.</div>
+        <div class="card-foot">
+          <div class="card-url">jointhewealthcircle.com/deal-submission</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- DEALS -->
+  <div class="panel" id="panel-deals">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Deal <em>Tools</em></div>
+        <div class="panel-meta">Underwriting, structure, capital partners</div>
+      </div>
+    </div>
+    <div class="grid">
+
+      <a class="card c-gold" href="https://nickayala22.github.io/deal-analyzer/" target="_blank"
+         data-name="Deal Analyzer" data-tags="deal analyzer underwriting returns IRR cash on cash equity exit">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">Deal Analyzer</div>
+        <div class="card-desc">Cash-on-cash, IRR, equity at exit. Run actual numbers against a deal before committing to the raise.</div>
+        <div class="card-foot">
+          <div class="card-url">deal-analyzer</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a class="card c-blue" href="https://nickayala22.github.io/capital-partners/" target="_blank"
+         data-name="Capital Stack Builder" data-tags="capital stack builder structure debt equity mezzanine layers">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="5" rx="1"/><rect x="4" y="9" width="16" height="5" rx="1"/><rect x="6" y="4" width="12" height="5" rx="1"/></svg></div>
+          <span class="badge b-live">Live</span>
+        </div>
+        <div class="card-name">Capital Stack Builder</div>
+        <div class="card-desc">Layer debt, equity, and mezz interactively. Walk operators through structuring before they go to market.</div>
+        <div class="card-foot">
+          <div class="card-url">capital-partners</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+      <a class="card c-green" href="https://nickayala22.github.io/capital-partners/" target="_blank"
+         data-name="Capital Partners Page" data-tags="capital partners family office lenders accredited investors LP send">
+        <div class="card-top">
+          <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <span class="badge b-ext">LP Facing</span>
+        </div>
+        <div class="card-name">Capital Partners Page</div>
+        <div class="card-desc">Send to family offices, private lenders, accredited investors. Entry point for the LP side of the network.</div>
+        <div class="card-foot">
+          <div class="card-url">capital-partners</div>
+          <div class="card-go"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- EXTERNAL -->
+  <div class="panel" id="panel-external">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">External <em>Sites</em></div>
+        <div class="panel-meta">Public-facing properties</div>
+      </div>
+    </div>
+    <div class="ext-grid">
+
+      <a class="ext-card" href="https://alignequitygroup.com" target="_blank">
+        <div>
+          <div class="ext-card-name">Align Equity Group</div>
+          <div class="ext-card-url">alignequitygroup.com</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+
+      <a class="ext-card" href="https://jointhewealthcircle.com" target="_blank">
+        <div>
+          <div class="ext-card-name">The Wealth Circle</div>
+          <div class="ext-card-url">jointhewealthcircle.com</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+
+      <a class="ext-card" href="https://capital-unlocked.com/join" target="_blank">
+        <div>
+          <div class="ext-card-name">Capital Unlocked</div>
+          <div class="ext-card-url">capital-unlocked.com/join</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+
+      <a class="ext-card" href="https://nickjayala.com" target="_blank">
+        <div>
+          <div class="ext-card-name">Nick Ayala Personal</div>
+          <div class="ext-card-url">nickjayala.com</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+
+      <a class="ext-card" href="https://raiseoscrm.com" target="_blank">
+        <div>
+          <div class="ext-card-name">Raise OS CRM</div>
+          <div class="ext-card-url">raiseoscrm.com</div>
+        </div>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9aa0b0" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+      </a>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+// Clock
+function tick() {
+  const n = new Date();
+  document.getElementById('clk').textContent =
+    n.getHours().toString().padStart(2,'0') + ':' + n.getMinutes().toString().padStart(2,'0');
+}
+tick(); setInterval(tick, 10000);
+
+// Tabs
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    // clear search if switching tabs
+    document.getElementById('si').value = '';
+    hideSearch();
+
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+  });
+});
+
+// Search
+function onSearch() {
+  const q = document.getElementById('si').value.toLowerCase().trim();
+  if (!q) { hideSearch(); return; }
+
+  // hide all panels, show search panel
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('searchPanel').classList.add('active');
+
+  // gather all cards
+  const allCards = Array.from(document.querySelectorAll('.card:not(.card-ph)'));
+  const grid = document.getElementById('searchGrid');
+  const empty = document.getElementById('searchEmpty');
+
+  // clear previous clones
+  grid.innerHTML = '';
+
+  const matches = allCards.filter(c => {
+    const t = [c.dataset.name, c.dataset.tags,
+      c.querySelector('.card-desc')?.textContent,
+      c.querySelector('.card-name')?.textContent].join(' ').toLowerCase();
+    return t.includes(q);
+  });
+
+  if (matches.length === 0) {
+    empty.style.display = 'block';
+    grid.style.display = 'none';
+  } else {
+    empty.style.display = 'none';
+    grid.style.display = 'grid';
+    matches.forEach(c => {
+      const clone = c.cloneNode(true);
+      grid.appendChild(clone);
+    });
+  }
+}
+
+function hideSearch() {
+  document.getElementById('searchPanel').classList.remove('active');
+  // restore last active tab
+  const activeTab = document.querySelector('.tab.active');
+  if (activeTab) {
+    document.getElementById('panel-' + activeTab.dataset.tab).classList.add('active');
+  } else {
+    document.querySelector('.tab').classList.add('active');
+    document.getElementById('panel-primary').classList.add('active');
+  }
+}
+</script>
+</body>
+</html>
