@@ -963,10 +963,6 @@ tick(); setInterval(tick, 10000);
 // Tabs
 document.querySelectorAll('.tab').forEach(tab => {
   tab.addEventListener('click', () => {
-    // clear search if switching tabs
-    document.getElementById('si').value = '';
-    hideSearch();
-
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     tab.classList.add('active');
@@ -974,55 +970,7 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-// Search
-function onSearch() {
-  const q = document.getElementById('si').value.toLowerCase().trim();
-  if (!q) { hideSearch(); return; }
 
-  // hide all panels, show search panel
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('searchPanel').classList.add('active');
-
-  // gather all cards
-  const allCards = Array.from(document.querySelectorAll('.card:not(.card-ph)'));
-  const grid = document.getElementById('searchGrid');
-  const empty = document.getElementById('searchEmpty');
-
-  // clear previous clones
-  grid.innerHTML = '';
-
-  const matches = allCards.filter(c => {
-    const t = [c.dataset.name, c.dataset.tags,
-      c.querySelector('.card-desc')?.textContent,
-      c.querySelector('.card-name')?.textContent].join(' ').toLowerCase();
-    return t.includes(q);
-  });
-
-  if (matches.length === 0) {
-    empty.style.display = 'block';
-    grid.style.display = 'none';
-  } else {
-    empty.style.display = 'none';
-    grid.style.display = 'grid';
-    matches.forEach(c => {
-      const clone = c.cloneNode(true);
-      grid.appendChild(clone);
-    });
-  }
-}
-
-function hideSearch() {
-  document.getElementById('searchPanel').classList.remove('active');
-  // restore last active tab
-  const activeTab = document.querySelector('.tab.active');
-  if (activeTab) {
-    document.getElementById('panel-' + activeTab.dataset.tab).classList.add('active');
-  } else {
-    document.querySelector('.tab').classList.add('active');
-    document.getElementById('panel-primary').classList.add('active');
-  }
-}
 </script>
 </body>
 </html>
